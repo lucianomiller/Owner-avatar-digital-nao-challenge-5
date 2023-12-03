@@ -10,7 +10,7 @@ export class BooksService {
     @InjectRepository(Book) private booksRepository: Repository<Book>,
   ) {}
 
-  async findAll(params): Promise<Book[]> {
+  async findAll(): Promise<Book[]> {
     return await this.booksRepository.find();
   }
 
@@ -18,8 +18,8 @@ export class BooksService {
     return await this.booksRepository.findOne({ where: { id: bookId } });
   }
 
-  createBook(newBook: BookDto): Promise<Book> {
-    return this.booksRepository.save(newBook);
+  async createBook(newBook: BookDto): Promise<Book> {
+    return await this.booksRepository.save(newBook);
   }
 
   async deleteBook(bookId: string): Promise<any> {

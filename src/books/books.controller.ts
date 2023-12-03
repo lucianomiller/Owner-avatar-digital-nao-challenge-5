@@ -2,7 +2,6 @@ import {
   Controller,
   Get,
   Param,
-  Req,
   Post,
   Body,
   Delete,
@@ -11,7 +10,6 @@ import {
   Res,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
-import { Request } from 'express';
 import { BookDto } from './book.dto';
 import { Book } from './book.entity';
 import { AuthGuard } from '@nestjs/passport';
@@ -35,8 +33,9 @@ export class BooksController {
     description: 'Lista de libros',
     type: Book,
   })
-  async findAll(@Req() request: Request, @Res() res): Promise<Book[]> {
-    const data = await this.booksService.findAll(request.query);
+  async findAll(@Res() res): Promise<Book[]> {
+    const data = await this.booksService.findAll();
+    console.log('data', data);
 
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
